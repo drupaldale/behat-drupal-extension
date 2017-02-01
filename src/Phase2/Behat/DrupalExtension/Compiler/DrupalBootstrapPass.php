@@ -80,6 +80,12 @@ class DrupalBootstrapPass implements CompilerPassInterface
             drupal_override_server_variables(array(
               'url' => $base_url,
             ));
+            $url = parse_url($base_url);
+            if(empty($url['host'])) {
+              print_r($url);
+              print("Your base url was setup incorrectly. Missing protocol?");
+              die;
+            }
             drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
             // Go back to the original directory.
